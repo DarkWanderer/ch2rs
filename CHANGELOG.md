@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased] - ReleaseDate
 ### Added
 - Support ClickHouse `Time` / `Time64` plus `--temporal` mapping modes (`raw`, `time`, `chrono`) with serde integration ([#16]).
+- `cargo-binstall` support: prebuilt binaries are now published to GitHub Releases on tag pushes, so `cargo binstall ch2rs` works without compiling from source.
 
 [#16]: https://github.com/ClickHouse/ch2rs/pull/16
 
