@@ -12,6 +12,9 @@ jobs:
   create-release:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: taiki-e/create-gh-release-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -37,6 +40,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: taiki-e/upload-rust-binary-action@v1
         with:
           bin: ch2rs
