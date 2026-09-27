@@ -1,5 +1,5 @@
 use anyhow::{anyhow, bail, Context, Result};
-use clickhouse::{Client, Row};
+use clickhouse::{Client, Compression, Row};
 use serde::Deserialize;
 
 use crate::{
@@ -14,7 +14,13 @@ fn make_client(options: &Options) -> Client {
         options.url.clone()
     };
 
-    let mut client = Client::default().with_url(url);
+    // ClickHouse 26.9+ defaults HTTP `compress=1` responses to ZSTD, but this
+    // crate's LZ4 decoder is hardcoded and can't read that framing (see
+    // https://github.com/ClickHouse/clickhouse-rs/issues/468). We only fetch a
+    // few metadata rows here, so just skip compression instead.
+    let mut client = Client::default()
+        .with_url(url)
+        .with_compression(Compression::None);
 
     if let Some(user) = &options.user {
         client = client.with_user(user);
