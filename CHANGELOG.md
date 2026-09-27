@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support ClickHouse `Time` / `Time64` plus `--temporal` mapping modes (`raw`, `time`, `chrono`) with serde integration ([#16]).
 - `cargo-binstall` support: prebuilt binaries are now published to GitHub Releases on tag pushes, so `cargo binstall ch2rs` works without compiling from source.
 
+### Fixed
+- Disable HTTP response compression when querying `system.columns`. ClickHouse 26.9+ defaults `compress=1` responses to ZSTD, which the `clickhouse` crate's LZ4-only decoder can't read, so every fetch against a 26.9+ server failed with `decompression error: incorrect magic number` ([ClickHouse/clickhouse-rs#468](https://github.com/ClickHouse/clickhouse-rs/issues/468)).
+
 [#16]: https://github.com/ClickHouse/ch2rs/pull/16
 
 ## [0.1.8] - 2024-09-27
