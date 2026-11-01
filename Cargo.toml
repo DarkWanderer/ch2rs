@@ -1,10 +1,10 @@
 [package]
 name = "ch2rs"
-version = "0.1.8"
+version = "0.1.9"
 description = "Generate Rust structs from ClickHouse rows"
 keywords = ["clickhouse", "database", "generator"]
 authors = ["ClickHouse Contributors", "Paul Loyd <pavelko95@gmail.com>"]
-repository = "https://github.com/ClickHouse/ch2rs"
+repository = "https://github.com/DarkWanderer/ch2rs"
 license = "MIT"
 readme = "README.md"
 edition = "2021"
@@ -18,12 +18,16 @@ default = ["rustls-tls"]
 rustls-tls = ["clickhouse/rustls-tls"]
 native-tls = ["clickhouse/native-tls"]
 
+# taiki-e/upload-rust-binary-action (see .github/workflows/release.yml) names unix
+# archives `.tar.gz`, but binstall's `{ archive-suffix }` expands to `.tgz` for
+# `pkg-fmt = "tgz"`, so the suffix is spelled out to match the uploaded asset.
 [package.metadata.binstall]
-pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ target }{ archive-suffix }"
+pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ target }.tar.gz"
 bin-dir = "{ bin }{ binary-ext }"
 pkg-fmt = "tgz"
 
 [package.metadata.binstall.overrides.x86_64-pc-windows-msvc]
+pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ target }.zip"
 pkg-fmt = "zip"
 
 [dependencies]
